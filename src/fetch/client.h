@@ -14,6 +14,12 @@ bool check_hit_no_border(Client *c) {
 		 c->mon->visible_clients == 1)) {
 		hit_no_border = true;
 	}
+
+	if (config.no_border_in_monocle && c && c->mon && !c->isfloating &&
+		c->mon->pertag->ltidxs[c->mon->pertag->curtag]->id == MONOCLE) {
+		hit_no_border = true;
+	}
+
 	return hit_no_border;
 }
 

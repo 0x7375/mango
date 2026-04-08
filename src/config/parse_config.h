@@ -221,6 +221,7 @@ typedef struct {
 	int32_t scratchpad_cross_monitor;
 	int32_t focus_cross_tag;
 	int32_t view_current_to_back;
+	int32_t no_border_in_monocle;
 	int32_t no_border_when_single;
 	int32_t no_radius_when_single;
 	int32_t snap_distance;
@@ -1426,6 +1427,8 @@ bool parse_option(Config *config, char *key, char *value) {
 		config->allow_shortcuts_inhibit = atoi(value);
 	} else if (strcmp(key, "allow_lock_transparent") == 0) {
 		config->allow_lock_transparent = atoi(value);
+	} else if (strcmp(key, "no_border_in_monocle") == 0) {
+		config->no_border_in_monocle = atoi(value);
 	} else if (strcmp(key, "no_border_when_single") == 0) {
 		config->no_border_when_single = atoi(value);
 	} else if (strcmp(key, "no_radius_when_single") == 0) {
@@ -3187,6 +3190,7 @@ void override_config(void) {
 	config.enable_floating_snap = CLAMP_INT(config.enable_floating_snap, 0, 1);
 	config.snap_distance = CLAMP_INT(config.snap_distance, 0, 99999);
 	config.cursor_size = CLAMP_INT(config.cursor_size, 4, 512);
+	config.no_border_in_monocle = CLAMP_INT(config.no_border_in_monocle, 0, 1);
 	config.no_border_when_single =
 		CLAMP_INT(config.no_border_when_single, 0, 1);
 	config.no_radius_when_single =
@@ -3320,6 +3324,7 @@ void set_value_default() {
 	config.allow_tearing = TEARING_DISABLED;
 	config.allow_shortcuts_inhibit = SHORTCUTS_INHIBIT_ENABLE;
 	config.allow_lock_transparent = 0;
+	config.no_border_in_monocle = 0;
 	config.no_border_when_single = 0;
 	config.no_radius_when_single = 0;
 	config.snap_distance = 30;

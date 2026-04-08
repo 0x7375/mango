@@ -11,7 +11,7 @@
   wayland,
   wayland-protocols,
   wayland-scanner,
-  libxcb-wm,
+  xorg,
   xwayland,
   meson,
   ninja,
@@ -42,27 +42,26 @@ stdenv.mkDerivation {
     wayland-scanner
   ];
 
-  buildInputs =
-    [
-      libinput
-      libxcb
-      libxkbcommon
-      pcre2
-      pixman
-      wayland
-      wayland-protocols
-      wlroots_0_19
-      scenefx
-      libGL
-    ]
-    ++ lib.optionals enableXWayland [
-      libX11
-      libxcb-wm
-      xwayland
-    ];
+  buildInputs = [
+    libinput
+    libxcb
+    libxkbcommon
+    pcre2
+    pixman
+    wayland
+    wayland-protocols
+    wlroots_0_19
+    scenefx
+    libGL
+  ]
+  ++ lib.optionals enableXWayland [
+    libX11
+    xorg.xcbutilwm
+    xwayland
+  ];
 
   passthru = {
-    providedSessions = ["mango"];
+    providedSessions = [ "mango" ];
   };
 
   meta = {
@@ -70,7 +69,7 @@ stdenv.mkDerivation {
     description = "Practical and Powerful wayland compositor (dwm but wayland)";
     homepage = "https://github.com/mangowm/mango";
     license = lib.licenses.gpl3Plus;
-    maintainers = [];
+    maintainers = [ ];
     platforms = lib.platforms.unix;
   };
 }
